@@ -6,6 +6,12 @@ The backend PostGIS/GeoServer is provided via the [kartoza/docker-geoserver](htt
 
 ![Using React and OpenLayers to write feature data to PostGIS via GeoServer WFS Transactions](https://taylor.callsen.me/wp-content/uploads/2023/08/tcallsen-openlayers-feature-data-v2.jpg)
 
+## Features
+
+- The [WFS layer is created](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L88-L110) and added to the OpenLayes map
+- Writing feature properties to the GeoServer WFS layer is done in an [OpenLayer map onclick callback function](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L37-L74). 
+- [React refs](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L28-L30) were used to maintain OpenLayers object references between React renders, and make the objects available to the callback function.
+
 ## Install
 
 First initialize the git submodule used for the `kartoza/docker-geoserver` image:
