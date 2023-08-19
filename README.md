@@ -2,17 +2,21 @@
 
 A sample application with a React/OpenLayers frontend that writes feature data to PostGIS using GeoServer WFS Transaction support. 
 
-The backend PostGIS/GeoServer is provided via the [kartoza/docker-geoserver](https://github.com/kartoza/docker-geoserver/) image, which is included a git submodule. The application UI code is contained in this repo and based on `create-react-app`.
+![Various layers the data flows through in this sample application](https://taylor.callsen.me/wp-content/uploads/2023/08/tcallsen-wfst-arch-layers.jpg)
+
+The backend PostGIS/GeoServer is provided via the [kartoza/docker-geoserver](https://github.com/kartoza/docker-geoserver/) repo, which is included as a git submodule. The app frontend UI code is contained in this repo and based on `create-react-app`.
+
+## Concept
+
+Clicking on the feature will add `1` to the feature's `iteration` property in the UI, and use a WFS Transaction to write the update to PostGIS using logic in the [OpenLayers map onclick callback function](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L37-L74).
+
+Other notes:
+- A [WFS layer containing the feature is created and added](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L88-L110) to the OpenLayes map
+- [React refs](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L28-L30) are used to maintain OpenLayers object references between React renders, and make the objects available to the callback function
 
 ![Using React and OpenLayers to write feature data to PostGIS via GeoServer WFS Transactions](https://taylor.callsen.me/wp-content/uploads/2023/08/tcallsen-openlayers-feature-data-v2.jpg)
 
-## Features
-
-- The [WFS layer is created](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L88-L110) and added to the OpenLayes map
-- Writing feature properties to the GeoServer WFS layer is done in an [OpenLayers map onclick callback function](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L37-L74). 
-- [React refs](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L28-L30) were used to maintain OpenLayers object references between React renders, and make the objects available to the callback function.
-
-## Install
+## Install / Build
 
 First initialize the git submodule used for the `kartoza/docker-geoserver` image:
 
@@ -26,33 +30,6 @@ Then install React/Node dependencies with the following command:
 nvm use
 npm install
 ```
-
-## Start
-
-### Backend - PostGIS/GeoServer
-
-The backend servers can be started with `docker-compose`:
-
-```
-cd docker-geoserver
-docker-compose up -d
-```
-
-PostGIS should be reachable at: `postgresql://docker:docker@localhost:32767/gis`.
-
-GeoServer should be available at: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/).
-
-**Note:** The backend still requires configuration before use - see the `Configure Backend` section below.
-
-### Frontend - React/OpenLayers
-
-To run a development build and launch the React development server, execute:
-
-```
-npm start
-```
-
-Once completed, the frontend should be avialable at: [http://localhost:3000/](http://localhost:3000/).
 
 ## Configure Backend
 
@@ -101,6 +78,33 @@ Finally we will create a new Layer that publishes the `generic` table we created
 ![Create a new Layer in GeoServer](https://taylor.callsen.me/wp-content/uploads/2023/08/tcallsen-geoserver-create-layer.png)
 
 When creating the layer, make sure to generate the Bounding Boxes with the `Compute from data` and `Compute from native bounds` links. Otherwise the default settings will work.
+
+## Start
+
+### Backend - PostGIS/GeoServer
+
+**Note:** Make sure the backend has been configured prior to use - if not see the `Configure Backend` section above.
+
+The backend servers can be started with `docker-compose`:
+
+```
+cd docker-geoserver
+docker-compose up -d
+```
+
+PostGIS should be reachable at: `postgresql://docker:docker@localhost:32767/gis`.
+
+GeoServer should be available at: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/).
+
+### Frontend - React/OpenLayers
+
+To run a development build and launch the React development server, execute:
+
+```
+npm start
+```
+
+Once completed, the frontend should be avialable at: [http://localhost:3000/](http://localhost:3000/).
 
 ## Development Environment
 
