@@ -31,11 +31,22 @@ nvm use
 npm install
 ```
 
-## Configure Backend
+## Start and Configure Backend
+
+The backend servers can be started with `docker-compose`. From the repo root:
+
+```
+cd docker-geoserver
+docker-compose up -d
+```
+
+PostGIS should be reachable at: `postgresql://docker:docker@localhost:32767/gis`.
+
+GeoServer should be available at: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/).
 
 ### PostGIS
 
-Execute the following SQL commands to create a table named `generic` and a sample record. Make sure the table includes a primary key, or GeoServer will not be able to perform updates to the underlying row!
+Against the PostGIS instance, execute the following SQL commands to create a table named `generic` and a sample record. Make sure the table includes a primary key, or GeoServer will not be able to perform updates to the underlying row!
 
 ```
 CREATE TABLE public.generic (
@@ -54,7 +65,7 @@ INSERT INTO public.generic VALUES (0, 'polygon', '0103000020E6100000010000000D00
 
 ### GeoServer
 
-First log into the GeoServer instance: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/)
+Next, log into the GeoServer instance: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/)
 
 Create a new Workspace called `dev`.
 
@@ -79,24 +90,7 @@ Finally we will create a new Layer that publishes the `generic` table we created
 
 When creating the layer, make sure to generate the Bounding Boxes with the `Compute from data` and `Compute from native bounds` links. Otherwise the default settings will work.
 
-## Start
-
-### Backend - PostGIS/GeoServer
-
-**Note:** Make sure the backend has been configured prior to use - if not see the `Configure Backend` section above.
-
-The backend servers can be started with `docker-compose`:
-
-```
-cd docker-geoserver
-docker-compose up -d
-```
-
-PostGIS should be reachable at: `postgresql://docker:docker@localhost:32767/gis`.
-
-GeoServer should be available at: [http://admin:myawesomegeoserver@localhost:8600/geoserver/web/](http://admin:myawesomegeoserver@localhost:8600/geoserver/web/).
-
-### Frontend - React/OpenLayers
+## Start Frontend - React/OpenLayers
 
 To run a development build and launch the React development server, execute:
 
@@ -105,6 +99,8 @@ npm start
 ```
 
 Once completed, the frontend should be avialable at: [http://localhost:3000/](http://localhost:3000/).
+
+You're ready to use the app! 🎉
 
 ## Development Environment
 
