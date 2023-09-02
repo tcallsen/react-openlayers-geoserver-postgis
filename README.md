@@ -8,11 +8,11 @@ The backend PostGIS/GeoServer is provided via the [kartoza/docker-geoserver](htt
 
 ## Concept
 
-Clicking on the feature will add `1` to the feature's `iteration` property in the UI, and use a WFS Transaction to write the update to PostGIS using logic in the [OpenLayers map onclick callback function](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L37-L74).
+Clicking on the feature will add `1` to the feature's `iteration` property in the UI, and use a WFS Transaction to write the update to PostGIS using logic in the [OpenLayers map onclick callback function](https://github.com/tcallsen/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L37-L74).
 
 Other notes:
-- A [WFS layer containing the feature is created and added](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L88-L110) to the OpenLayes map
-- [React refs](https://github.com/scenic-routing/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L28-L30) are used to maintain OpenLayers object references between React renders, and make the objects available to the callback function
+- A [WFS layer containing the feature is created and added](https://github.com/tcallsen/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L88-L110) to the OpenLayes map
+- [React refs](https://github.com/tcallsen/react-openlayers-geoserver-postgis/blob/master/src/components/MapWrapper.js#L28-L30) are used to maintain OpenLayers object references between React renders, and make the objects available to the callback function
 
 ![Using React and OpenLayers to write feature data to PostGIS via GeoServer WFS Transactions](https://taylor.callsen.me/wp-content/uploads/2023/08/tcallsen-openlayers-feature-data-v2.jpg)
 
@@ -105,3 +105,8 @@ You're ready to use the app! 🎉
 ## Development Environment
 
 This application was developed using create-react-app, with Node version v18.16.0
+
+
+## Blog Post
+
+I created a blog post that discusses this project in more detail. Check it out here: [https://taylor.callsen.me/save-openlayers-feature-data-to-postgis-using-wfs-transactions/](https://taylor.callsen.me/save-openlayers-feature-data-to-postgis-using-wfs-transactions/)
